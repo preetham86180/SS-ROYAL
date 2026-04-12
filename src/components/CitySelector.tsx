@@ -1,42 +1,22 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
+import { MapPin, Plus } from "lucide-react";
 
-// City data with real Unsplash thumbnail images
-const CITIES = [
-  {
-    name: "Mumbai",
-    img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&q=80",
-  },
-  {
-    name: "Delhi",
-    img: "https://images.unsplash.com/photo-1587474260584-136574528ed5?w=120&q=80",
-  },
-  {
-    name: "Bengaluru",
-    img: "https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=120&q=80",
-  },
-  {
-    name: "Hyderabad",
-    img: "https://images.unsplash.com/photo-1572445271230-a78bc5e7af6f?w=120&q=80",
-  },
-  {
-    name: "Chennai",
-    img: "https://images.unsplash.com/photo-1582510003544-4d00b7f74220?w=120&q=80",
-  },
-  {
-    name: "Pune",
-    img: "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?w=120&q=80",
-  },
-  {
-    name: "Kolkata",
-    img: "https://images.unsplash.com/photo-1558618047-3c8c76ca1d5e?w=120&q=80",
-  },
-  {
-    name: "Ahmedabad",
-    img: "https://images.unsplash.com/photo-1624293952627-c5b79f06f13e?w=120&q=80",
-  },
-];
+// The full list of user-requested locations
+const ALL_LOCATIONS = [
+  "Indiranagar", "Tin Factory", "KR Puram", "Battarahalli", 
+  "Ramamurthy Nagar", "Anandapura", "Hebbal", "Medahalli", 
+  "Avalahalli", "Hoskote", "Narsapura", "Kolar", 
+  "Devanahalli", "Chikkaballapur", "Doddaballapur", "Whitefield", 
+  "Kadugodi", "Budigere Cross", "Mahadevpura", "Narayanapura", 
+  "Bagaluru", "Vemagal", "H Cross", "Chintamani"
+].map(name => ({
+  name,
+  // Since we don't have distinct thumbnails for 24 specific local areas, we will use a generic clean architectural placeholder
+  img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=120&q=80" 
+}));
 
 interface CitySelectorProps {
   /** counts keyed by lowercase city name */
@@ -44,6 +24,11 @@ interface CitySelectorProps {
 }
 
 export function CitySelector({ propertyCounts }: CitySelectorProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  // Show first 7 locations, leave the 8th spot for the 'See More' button
+  const visibleLocations = isExpanded ? ALL_LOCATIONS : ALL_LOCATIONS.slice(0, 7);
+
   return (
     <section className="bg-[#EEF2FF] py-16 px-4 relative overflow-hidden">
       {/* Decorative circles */}
@@ -55,10 +40,10 @@ export function CitySelector({ propertyCounts }: CitySelectorProps) {
         <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-10">
           <div>
             <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-1">
-              Find Properties in These Cities
+              Find Properties By Location
             </h2>
             <p className="text-gray-500 text-sm">
-              Browse our wide selection of properties across India's top cities.
+              Explore listings across prime neighborhoods and surrounding regions.
             </p>
           </div>
           <Link
@@ -69,32 +54,32 @@ export function CitySelector({ propertyCounts }: CitySelectorProps) {
           </Link>
         </div>
 
-        {/* City grid – 4 cols on lg, 2 on sm */}
+        {/* Location grid – 4 cols on lg, 2 on sm */}
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-          {CITIES.map((city) => {
+          {visibleLocations.map((loc) => {
             const count =
-              propertyCounts[city.name.toLowerCase()] ??
-              propertyCounts[city.name] ??
+              propertyCounts[loc.name.toLowerCase()] ??
+              propertyCounts[loc.name] ??
               0;
             return (
               <Link
-                key={city.name}
-                href={`/?location=${encodeURIComponent(city.name)}`}
+                key={loc.name}
+                href={`/?location=${encodeURIComponent(loc.name)}`}
                 className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all group cursor-pointer"
               >
-                {/* City thumbnail */}
-                <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-gray-100">
+                {/* Thumbnail */}
+                <div className="w-14 h-14 rounded-lg overflow-hidden flex-shrink-0 bg-indigo-50 flex items-center justify-center text-indigo-300 relative">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={city.img}
-                    alt={city.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    src={loc.img}
+                    alt={loc.name}
+                    className="absolute inset-0 w-full h-full object-cover opacity-80 group-hover:scale-110 group-hover:opacity-100 transition-all duration-300"
                   />
                 </div>
                 {/* City info */}
-                <div>
-                  <p className="font-semibold text-gray-900 text-sm leading-tight">
-                    {city.name}
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-gray-900 text-sm leading-tight truncate">
+                    {loc.name}
                   </p>
                   <p className="text-[#6366F1] text-xs font-medium mt-0.5">
                     {count} {count === 1 ? "Property" : "Properties"}
@@ -103,6 +88,26 @@ export function CitySelector({ propertyCounts }: CitySelectorProps) {
               </Link>
             );
           })}
+
+          {/* See more locations button slot */}
+          {!isExpanded && (
+            <button
+              onClick={() => setIsExpanded(true)}
+              className="flex items-center justify-center gap-3 bg-indigo-100/50 border border-indigo-200 border-dashed rounded-xl px-4 py-3 shadow-sm hover:bg-indigo-100 hover:border-indigo-300 hover:-translate-y-0.5 transition-all group cursor-pointer text-left"
+            >
+              <div className="w-14 h-14 rounded-lg bg-indigo-200/50 flex items-center justify-center text-indigo-600 flex-shrink-0 group-hover:bg-indigo-500 group-hover:text-white transition-colors duration-300">
+                <Plus size={24} />
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-indigo-900 text-sm leading-tight">
+                  17 More
+                </p>
+                <p className="text-indigo-600/80 text-xs font-medium mt-0.5">
+                  View full list
+                </p>
+              </div>
+            </button>
+          )}
         </div>
       </div>
     </section>
