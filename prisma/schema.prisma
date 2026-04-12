@@ -37,6 +37,7 @@ model Property {
   city          String?
   
   youtubeUrl    String?
+  isFeatured  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }

@@ -38,6 +38,11 @@ export default async function Home(props: { searchParams: SearchParams }) {
     orderBy: { createdAt: "desc" },
   });
 
+  const featuredProperties = await prisma.property.findMany({
+    where: { isFeatured: true },
+    orderBy: { createdAt: "desc" },
+  });
+
   // Calculate unique filters from the entire database (unfiltered) to populate dropdowns
   const allProperties = await prisma.property.findMany({ select: { location: true, bedrooms: true, price: true } });
   
@@ -128,8 +133,8 @@ export default async function Home(props: { searchParams: SearchParams }) {
         <CitySelector propertyCounts={propertyCounts} />
 
         {/* PROPERTY LISTINGS SECTION */}
-        <section className="bg-gray-50 flex-1">
-          <div className="container mx-auto px-4 py-24">
+        <section className="bg-gray-50 pt-24 pb-16">
+          <div className="container mx-auto px-4">
             <div className="max-w-2xl mx-auto text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 mb-4">
                 Discover Your <span className="text-[#6366F1]">Dream Home</span>
@@ -163,6 +168,46 @@ export default async function Home(props: { searchParams: SearchParams }) {
             )}
           </div>
         </section>
+
+        {/* FEATURED PROPERTIES SECTION */}
+        {featuredProperties.length > 0 && (
+          <section className="bg-white py-16 border-t border-gray-100">
+            <div className="container mx-auto px-4">
+              <div className="flex items-center justify-between mb-10">
+                <div>
+                  <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Properties</h2>
+                  <p className="text-gray-500 text-sm">Handpicked premium properties</p>
+                </div>
+                <div className="flex gap-3">
+                  <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-brand-600 hover:border-brand-600 transition-colors">
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-brand-600 hover:border-brand-600 transition-colors">
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
+              </div>
+
+              {/* Horizontal Scroll Snap Container */}
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-8 hide-scrollbar" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+                {featuredProperties.map((property) => (
+                  <div key={property.id} className="snap-start shrink-0 w-full sm:w-[350px] md:w-[400px]">
+                    <PropertyCard
+                      id={property.id}
+                      title={property.title}
+                      price={property.price}
+                      location={property.location}
+                      bedrooms={property.bedrooms}
+                      bathrooms={property.bathrooms}
+                      area={property.area}
+                      imageUrl={property.imageUrl}
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </main>
       <Footer />
     </>
