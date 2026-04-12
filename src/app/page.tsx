@@ -2,6 +2,7 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { PropertyCard } from "@/components/PropertyCard";
 import { SearchWidget } from "@/components/SearchWidget";
+import { CitySelector } from "@/components/CitySelector";
 import { PrismaClient } from "@prisma/client";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -46,6 +47,13 @@ export default async function Home(props: { searchParams: SearchParams }) {
   const dbMinPrice = allProperties.length > 0 ? Math.min(...allProperties.map(p => p.price)) : 0;
   const dbMaxPrice = allProperties.length > 0 ? Math.max(...allProperties.map(p => p.price)) : 10000;
   const priceRange = { min: dbMinPrice, max: dbMaxPrice };
+
+  // Count properties per city for CitySelector
+  const propertyCounts: Record<string, number> = {};
+  for (const p of allProperties) {
+    const key = p.location?.toLowerCase() ?? "";
+    propertyCounts[key] = (propertyCounts[key] || 0) + 1;
+  }
 
   return (
     <>
@@ -138,6 +146,9 @@ export default async function Home(props: { searchParams: SearchParams }) {
           bhkOptions={bhkOptions} 
           priceRange={priceRange} 
         />
+
+        {/* CITY SELECTOR SECTION */}
+        <CitySelector propertyCounts={propertyCounts} />
 
         {/* PROPERTY LISTINGS SECTION */}
         <section className="bg-gray-50 flex-1">
