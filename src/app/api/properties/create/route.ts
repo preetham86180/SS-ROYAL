@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import path from "path";
 import { put } from "@vercel/blob";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 async function saveUploadedFile(file: File, folder: string): Promise<string> {
   try {

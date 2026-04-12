@@ -1,13 +1,12 @@
 "use server";
 
-import { PrismaClient } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import path from "path";
 import fs from "fs/promises";
 import { existsSync } from "fs";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 async function saveUploadedFile(file: File, folder: string): Promise<string> {
   const uploadsDir = path.join(process.cwd(), "public", "uploads", folder);

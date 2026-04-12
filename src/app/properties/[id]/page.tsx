@@ -2,10 +2,9 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
-import { PrismaClient } from "@prisma/client";
 import { Bed, Bath, Square, MapPin, CheckCircle2 } from "lucide-react";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 export default async function PropertyPage({
   params,

@@ -4,9 +4,8 @@ import { PropertyCard } from "@/components/PropertyCard";
 import { SearchWidget } from "@/components/SearchWidget";
 import { CitySelector } from "@/components/CitySelector";
 import { FeaturedSection } from "@/components/FeaturedSection";
-import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+import { prisma } from "@/lib/prisma";
 
 type SearchParams = Promise<{ [key: string]: string | string[] | undefined }>;
 
