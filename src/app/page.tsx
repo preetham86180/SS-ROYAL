@@ -98,30 +98,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
             </div>
           </div>
             
-          {/* Bottom elements absolute bar */}
-          <div className="absolute bottom-0 left-0 w-full px-6 lg:px-12 pb-10 flex flex-col md:flex-row justify-between items-start md:items-end gap-6 z-20">
-              <div className="pl-3 border-l-2 border-white/20">
-                 <p className="text-xs font-bold text-gray-400 tracking-wider mb-1">New York</p>
-                 <p className="text-lg font-bold text-white tracking-wide">1901 Cutter Lane</p>
-              </div>
-              
-              <div className="flex items-center gap-8 border-t border-white/10 md:border-t-0 pt-6 md:pt-0 w-full md:w-auto">
-                 <div className="flex items-center gap-6 font-medium text-gray-500 text-sm">
-                   <span className="text-white border-b-2 border-white pb-1 w-6 text-center">01</span>
-                   <span>02</span>
-                   <span>03</span>
-                 </div>
-                 <div className="h-px w-24 bg-white/20 hidden lg:block"></div>
-                 <div className="flex gap-4 ml-auto md:ml-0">
-                    <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors backdrop-blur-sm cursor-pointer">
-                       <ChevronLeft size={18} />
-                    </button>
-                    <button className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black transition-colors backdrop-blur-sm cursor-pointer">
-                       <ChevronRight size={18} />
-                    </button>
-                 </div>
-              </div>
-          </div>
+
 
           {/* Circular Agent Image */}
           <div className="hidden lg:block absolute right-[8%] top-[55%] -translate-y-1/2 z-20 hover:scale-105 transition-transform duration-500 cursor-pointer">
