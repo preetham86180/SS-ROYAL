@@ -39,10 +39,10 @@ export function FeaturedSection({ properties }: FeaturedSectionProps) {
             duration: 20,
             ease: "linear",
           }}
-          className="flex whitespace-nowrap items-center gap-8 text-5xl md:text-7xl font-bold tracking-tight opacity-90"
+          className="flex whitespace-nowrap items-center gap-4 sm:gap-8 text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight opacity-90"
         >
           {Array(10).fill("Featured Properties").map((text, i) => (
-            <div key={i} className="flex items-center gap-8">
+            <div key={i} className="flex items-center gap-4 sm:gap-8">
               <span>{text}</span>
               <span className="text-indigo-500">★</span>
             </div>
@@ -60,7 +60,7 @@ export function FeaturedSection({ properties }: FeaturedSectionProps) {
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
               key={property.id}
-              className="snap-start shrink-0 w-full sm:w-[400px] border-r border-white/10 px-6 py-4 flex flex-col hover:bg-white/[0.02] transition-colors group"
+              className="snap-start shrink-0 w-[85vw] sm:w-[400px] border-r border-white/10 px-6 py-4 flex flex-col hover:bg-white/[0.02] transition-colors group"
             >
               {/* Title & Subtitle */}
               <div className="mb-4">

@@ -40,18 +40,18 @@ export function SearchWidget({ locations, bhkOptions, priceRange }: SearchWidget
 
   return (
     <div className="relative max-w-6xl mx-auto px-4 z-30">
-      {/* Container - Translated up to overlap Hero */}
-      <div className="bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden transform md:-translate-y-1/2 mt-12 md:mt-0">
+      {/* Container - Handles overlapping hero gracefully */}
+      <div className="bg-white rounded-2xl shadow-[0_20px_40px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden transform relative -mt-6 md:-mt-0 md:-translate-y-1/2">
         
         {/* Top Tabs */}
-        <div className="flex bg-gray-50/50">
+        <div className="flex w-full bg-gray-50/50">
           {["Rent", "Buy", "Sell"].map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab as any)}
-              className={`px-10 py-5 text-[15px] font-semibold transition-colors ${
+              className={`flex-1 py-4 md:py-5 text-[14px] md:text-[15px] font-semibold transition-colors text-center ${
                 activeTab === tab
-                  ? "bg-[#3B82F6] text-white" // Using bright blue based on user comment
+                  ? "bg-[#3B82F6] text-white" 
                   : "bg-transparent text-gray-500 hover:text-gray-900"
               }`}
             >
@@ -128,7 +128,7 @@ export function SearchWidget({ locations, bhkOptions, priceRange }: SearchWidget
                   max={defaultMax} 
                   value={minVal} 
                   onChange={(e) => setMinVal(Math.min(Number(e.target.value), maxVal - 1))}
-                  className="absolute top-0 left-0 w-full h-1.5 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-red-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none cursor-pointer"
+                  className="absolute top-0 left-0 w-full h-1.5 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:bg-red-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none cursor-pointer"
                 />
                 <input 
                   type="range" 
@@ -136,7 +136,7 @@ export function SearchWidget({ locations, bhkOptions, priceRange }: SearchWidget
                   max={defaultMax} 
                   value={maxVal} 
                   onChange={(e) => setMaxVal(Math.max(Number(e.target.value), minVal + 1))}
-                  className="absolute top-0 left-0 w-full h-1.5 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-4 [&::-moz-range-thumb]:h-4 [&::-moz-range-thumb]:bg-red-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none cursor-pointer"
+                  className="absolute top-0 left-0 w-full h-1.5 appearance-none bg-transparent pointer-events-none [&::-webkit-slider-thumb]:pointer-events-auto [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:bg-red-500 [&::-webkit-slider-thumb]:rounded-full [&::-moz-range-thumb]:pointer-events-auto [&::-moz-range-thumb]:w-6 [&::-moz-range-thumb]:h-6 [&::-moz-range-thumb]:bg-red-500 [&::-moz-range-thumb]:rounded-full [&::-moz-range-thumb]:border-none cursor-pointer"
                 />
               </div>
             </div>
