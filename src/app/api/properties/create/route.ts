@@ -85,8 +85,11 @@ export async function POST(req: NextRequest) {
     revalidatePath("/");
 
     return NextResponse.json({ success: true });
-  } catch (err) {
+  } catch (err: any) {
     console.error("Error creating property:", err);
-    return NextResponse.json({ error: "Failed to create property" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Failed to create property", detail: err?.message || String(err) },
+      { status: 500 }
+    );
   }
 }
