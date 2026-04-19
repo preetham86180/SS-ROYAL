@@ -156,6 +156,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
                     bathrooms={property.bathrooms}
                     area={property.area}
                     imageUrl={property.imageUrl}
+                    status={property.status}
                   />
                 ))}
               </div>

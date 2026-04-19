@@ -4,6 +4,12 @@ import { motion } from "framer-motion";
 import { BedDouble, Bath, Square, ChevronUp, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
+const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
+  SALE: { label: "For Sale", cls: "bg-green-500 text-white" },
+  SOLD: { label: "Sold",     cls: "bg-red-500   text-white" },
+  RENT: { label: "For Rent", cls: "bg-blue-500  text-white" },
+};
+
 interface Property {
   id: string;
   title: string;
@@ -13,6 +19,7 @@ interface Property {
   bathrooms: number;
   area: number;
   imageUrl: string;
+  status?: string | null;
 }
 
 interface FeaturedSectionProps {
@@ -77,9 +84,15 @@ export function FeaturedSection({ properties }: FeaturedSectionProps) {
                   className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   sizes="(max-width: 768px) 100vw, 400px"
                 />
-                <div className="absolute bottom-4 left-4 bg-[#6366F1] text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
-                  POPULAR
-                </div>
+                {property.status && STATUS_BADGE[property.status.toUpperCase()] ? (
+                  <div className={`absolute bottom-4 left-4 text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg uppercase tracking-wide ${STATUS_BADGE[property.status.toUpperCase()].cls}`}>
+                    {STATUS_BADGE[property.status.toUpperCase()].label}
+                  </div>
+                ) : (
+                  <div className="absolute bottom-4 left-4 bg-[#6366F1] text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-lg">
+                    POPULAR
+                  </div>
+                )}
               </div>
 
               {/* Price */}

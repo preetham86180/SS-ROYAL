@@ -20,7 +20,7 @@ export default async function AdminLayout({
 
       {/* Main Content */}
       <main className="flex-1 overflow-auto">
-        <div className="p-8 max-w-6xl mx-auto">{children}</div>
+        <div className="p-4 md:p-8 max-w-6xl mx-auto">{children}</div>
       </main>
     </div>
   );

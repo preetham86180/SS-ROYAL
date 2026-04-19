@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X } from "lucide-react";
+import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { signOut } from "next-auth/react";
 
 export function AdminSidebar() {
   const pathname = usePathname();
@@ -32,7 +33,7 @@ export function AdminSidebar() {
           <span className="font-medium">New Listing</span>
         </Link>
       </nav>
-      <div className="p-4 border-t border-gray-100">
+      <div className="p-4 border-t border-gray-100 space-y-1">
         <Link
           href="/"
           className="flex items-center gap-3 px-3 py-2 text-gray-600 rounded-lg hover:bg-gray-100 transition-colors"
@@ -40,6 +41,13 @@ export function AdminSidebar() {
           <Globe size={20} />
           <span className="font-medium">View Live Site</span>
         </Link>
+        <button
+          onClick={() => signOut({ callbackUrl: "/login" })}
+          className="w-full flex items-center gap-3 px-3 py-2 text-red-500 rounded-lg hover:bg-red-50 transition-colors"
+        >
+          <LogOut size={20} />
+          <span className="font-medium">Sign Out</span>
+        </button>
       </div>
     </>
   );

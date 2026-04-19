@@ -14,7 +14,14 @@ interface PropertyCardProps {
   bathrooms: number;
   area: number;
   imageUrl: string;
+  status?: string | null;
 }
+
+const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
+  SALE: { label: "For Sale", cls: "bg-green-500 text-white" },
+  SOLD: { label: "Sold",     cls: "bg-red-500   text-white" },
+  RENT: { label: "For Rent", cls: "bg-blue-500  text-white" },
+};
 
 export function PropertyCard({
   id,
@@ -25,7 +32,10 @@ export function PropertyCard({
   bathrooms,
   area,
   imageUrl,
+  status,
 }: PropertyCardProps) {
+  const badge = status ? STATUS_BADGE[status.toUpperCase()] : null;
+
   return (
     <motion.div
       whileHover={{ y: -8 }}
@@ -43,21 +53,32 @@ export function PropertyCard({
           fill
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
+
+        {/* Price badge — top right */}
         <div className="absolute top-4 right-4 bg-white/90 backdrop-blur py-1 px-3 rounded-full text-brand-600 font-semibold shadow-sm">
-          ₹{price.toLocaleString('en-IN')}
+          ₹{price.toLocaleString("en-IN")}
         </div>
+
+        {/* Status badge — top left */}
+        {badge && (
+          <div
+            className={`absolute top-4 left-4 py-1 px-3 rounded-full text-xs font-bold tracking-wide uppercase shadow-sm ${badge.cls}`}
+          >
+            {badge.label}
+          </div>
+        )}
       </div>
 
       <div className="p-5">
         <h3 className="font-display text-xl font-bold text-gray-900 mb-1 line-clamp-1 group-hover:text-brand-600 transition-colors">
           {title}
         </h3>
-        
+
         <div className="flex items-center text-gray-500 text-sm mb-4">
           <MapPin size={16} className="mr-1 inline" />
           <span className="line-clamp-1">{location}</span>
         </div>
-        
+
         <div className="grid grid-cols-3 gap-2 border-t border-gray-100 pt-4 text-gray-600 text-sm font-medium">
           <div className="flex items-center gap-1.5 flex-col lg:flex-row text-center lg:text-left">
             <Bed size={18} className="text-brand-500" />
