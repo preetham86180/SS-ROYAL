@@ -27,7 +27,7 @@ export function Navigation() {
   const links = [
     { href: "/", label: "Home" },
     { href: "#", label: "About" },
-    { href: "#", label: "Property" },
+    { href: "/properties", label: "Properties" },
     { href: "#", label: "Pages" },
     { href: "#", label: "Blog" },
     { href: "#", label: "Contact" },
