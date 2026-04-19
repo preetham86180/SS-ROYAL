@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { PropertyCard } from "@/components/PropertyCard";
-import { Building2, Search, Filter, SlidersHorizontal, ChevronDown } from "lucide-react";
+import { Building2, Search, Filter, SlidersHorizontal, ChevronDown, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
