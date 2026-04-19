@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Bed, Bath, Square, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 
 interface PropertyCardProps {
   id: string;
@@ -15,13 +15,9 @@ interface PropertyCardProps {
   area: number;
   imageUrl: string;
   status?: string | null;
+  transaction?: string | null;
+  isFeatured?: boolean;
 }
-
-const STATUS_BADGE: Record<string, { label: string; cls: string }> = {
-  SALE: { label: "For Sale", cls: "bg-green-500 text-white" },
-  SOLD: { label: "Sold",     cls: "bg-red-500   text-white" },
-  RENT: { label: "For Rent", cls: "bg-blue-500  text-white" },
-};
 
 export function PropertyCard({
   id,
@@ -33,19 +29,25 @@ export function PropertyCard({
   area,
   imageUrl,
   status,
+  transaction,
+  isFeatured,
 }: PropertyCardProps) {
-  const badge = status ? STATUS_BADGE[status.toUpperCase()] : null;
+  // Determine transaction or fallback
+  const displayTransaction = transaction || "Sale";
+  // Determine status text for the data row (not the overlay)
+  const displayStatusDetail = "Ready to Move"; // Mockup shows 'Immediately' etc, we could use propertyAge or just static for now
 
   return (
     <motion.div
-      whileHover={{ y: -8 }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className="group relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl"
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="group relative bg-white border border-gray-100 flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300"
     >
       <Link href={`/properties/${id}`} className="block absolute inset-0 z-10">
         <span className="sr-only">View {title}</span>
       </Link>
 
+      {/* ── IMAGE SECTION ── */}
       <div className="aspect-[4/3] relative overflow-hidden bg-gray-100">
         <Image
           src={imageUrl || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=800"}
@@ -54,45 +56,69 @@ export function PropertyCard({
           className="object-cover group-hover:scale-105 transition-transform duration-500"
         />
 
-        {/* Price badge — top right */}
-        <div className="absolute top-4 right-4 bg-white/90 backdrop-blur py-1 px-3 rounded-full text-brand-600 font-semibold shadow-sm">
-          ₹{price.toLocaleString("en-IN")}
-        </div>
-
-        {/* Status badge — top left */}
-        {badge && (
-          <div
-            className={`absolute top-4 left-4 py-1 px-3 rounded-full text-xs font-bold tracking-wide uppercase shadow-sm ${badge.cls}`}
-          >
-            {badge.label}
+        {/* Featured Tag */}
+        {isFeatured && (
+          <div className="absolute top-4 left-4 bg-brand-600 text-white text-[10px] sm:text-xs font-bold px-2 py-1 uppercase tracking-wider z-20">
+            FEATURED
           </div>
         )}
+
+        {/* Price Overlay (Bottom Left) */}
+        <div className="absolute bottom-0 left-0 bg-black/60 text-white font-bold text-sm sm:text-base px-3 py-1.5 backdrop-blur-sm z-20">
+          ₹ {price.toLocaleString("en-IN")}
+        </div>
+
+        {/* Status Overlay (Bottom Right) */}
+        <div className="absolute bottom-0 right-0 bg-black/60 text-white text-xs font-semibold px-3 py-1.5 backdrop-blur-sm uppercase tracking-wide z-20">
+          {status ? `FOR ${status}` : "FOR SALE"}
+        </div>
       </div>
 
-      <div className="p-5">
-        <h3 className="font-display text-xl font-bold text-gray-900 mb-1 line-clamp-1 group-hover:text-brand-600 transition-colors">
+      {/* ── CONTENT SECTION ── */}
+      <div className="p-4 sm:p-5 flex flex-col flex-1">
+        {/* Title */}
+        <h3 className="font-display text-base sm:text-lg font-bold text-brand-600 mb-2 line-clamp-1">
           {title}
         </h3>
 
-        <div className="flex items-center text-gray-500 text-sm mb-4">
-          <MapPin size={16} className="mr-1 inline" />
+        {/* Location */}
+        <div className="flex items-center text-gray-500 text-xs sm:text-sm mb-4">
+          <MapPin size={14} className="mr-1.5 shrink-0" />
           <span className="line-clamp-1">{location}</span>
         </div>
 
-        <div className="grid grid-cols-3 gap-2 border-t border-gray-100 pt-4 text-gray-600 text-sm font-medium">
-          <div className="flex items-center gap-1.5 flex-col lg:flex-row text-center lg:text-left">
-            <Bed size={18} className="text-brand-500" />
-            <span>{bedrooms} Beds</span>
+        {/* Details Row */}
+        <div className="grid grid-cols-3 gap-2 mt-auto pb-4">
+          <div className="flex flex-col">
+            <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-0.5">
+              Area
+            </span>
+            <span className="text-xs font-medium text-gray-900">
+              {area} Sq.Ft.
+            </span>
           </div>
-          <div className="flex items-center gap-1.5 flex-col lg:flex-row text-center lg:text-left">
-            <Bath size={18} className="text-brand-500" />
-            <span>{bathrooms} Baths</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-0.5">
+              Beds
+            </span>
+            <span className="text-xs font-medium text-gray-900">
+              {bedrooms}
+            </span>
           </div>
-          <div className="flex items-center gap-1.5 flex-col lg:flex-row text-center lg:text-left">
-            <Square size={18} className="text-brand-500" />
-            <span>{area} sqft</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mb-0.5">
+              Transaction
+            </span>
+            <span className="text-xs font-medium text-gray-900 line-clamp-1">
+              {displayTransaction}
+            </span>
           </div>
         </div>
+
+        {/* Contact/View Button */}
+        <button className="w-full bg-brand-600 hover:bg-brand-700 text-white text-xs sm:text-sm font-bold uppercase tracking-wider py-3 mt-auto transition-colors z-20 relative">
+          View Details
+        </button>
       </div>
     </motion.div>
   );
