@@ -11,7 +11,7 @@ export default async function PropertiesPage(props: {
   const searchParams = await props.searchParams;
 
   // ── Build WHERE clause from filters ────────────────────────────
-  const whereClause: any = {};
+  const whereClause: any = { isApproved: true };
 
   const q = typeof searchParams.q === "string" ? searchParams.q : "";
   if (q) {
@@ -98,14 +98,28 @@ export default async function PropertiesPage(props: {
         <div className="pt-24 min-h-screen relative">
            
            {/* Top Title Banner */}
-           <div className="bg-[#0B1120] text-center py-10 relative overflow-hidden">
+           <div className="bg-[#0B1120] py-8 md:py-10 relative overflow-hidden flex items-center justify-center min-h-[140px]">
                <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80')] bg-cover bg-center"></div>
-               <div className="relative z-10">
-                 <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2 tracking-wide uppercase">Properties</h1>
-                 <div className="flex items-center justify-center gap-2 text-sm text-gray-400 font-medium">
-                    <a href="/" className="hover:text-white transition-colors">Home</a>
-                    <span>/</span>
-                    <span className="text-brand-500">Properties</span>
+               
+               <div className="container mx-auto px-4 relative z-10 w-full flex flex-col md:flex-row items-center justify-between">
+                 {/* Left spacer for perfect centering on desktop */}
+                 <div className="hidden md:block w-48"></div>
+                 
+                 <div className="text-center mb-6 md:mb-0">
+                   <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2 tracking-wide uppercase">Properties</h1>
+                   <div className="flex items-center justify-center gap-2 text-sm text-gray-400 font-medium">
+                      <a href="/" className="hover:text-white transition-colors">Home</a>
+                      <span>/</span>
+                      <span className="text-brand-500">Properties</span>
+                   </div>
+                 </div>
+
+                 {/* Top Right Action Button */}
+                 <div className="w-full md:w-48 flex justify-center md:justify-end">
+                    <a href="/submit" className="bg-[#3B82F6] hover:bg-[#2563EB] text-white px-5 py-2.5 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 whitespace-nowrap shadow-[0_0_15px_rgba(59,130,246,0.3)] hover:shadow-[0_0_25px_rgba(59,130,246,0.5)] hover:-translate-y-0.5 transform duration-300 text-sm">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" className="lucide lucide-plus" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+                      Submit Property
+                    </a>
                  </div>
                </div>
            </div>

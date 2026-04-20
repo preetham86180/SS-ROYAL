@@ -101,6 +101,7 @@ function StatusButtons({
 
 export default async function AdminDashboard() {
   const properties = await prisma.property.findMany({
+    where: { isApproved: true },
     orderBy: { createdAt: "desc" },
   });
 

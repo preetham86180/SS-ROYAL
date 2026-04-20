@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { revalidatePath } from "next/cache";
 import path from "path";
 import { put } from "@vercel/blob";
-
 import { prisma } from "@/lib/prisma";
 
 async function saveUploadedFile(file: File, folder: string): Promise<string> {
@@ -15,7 +13,7 @@ async function saveUploadedFile(file: File, folder: string): Promise<string> {
     return blob.url;
   } catch (error) {
     console.error("Vercel Blob Upload failed:", error);
-    // Fallback to a placeholder image
+    // Fallback placeholder
     return "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
   }
 }
@@ -33,6 +31,11 @@ export async function POST(req: NextRequest) {
     const area        = parseFloat(formData.get("area") as string) || 0;
     const features    = (formData.get("features") as string) || "";
 
+    // ─── Owner Info ────────────────────────────────────────────
+    const ownerName   = formData.get("ownerName") as string;
+    const ownerEmail  = formData.get("ownerEmail") as string;
+    const ownerPhone  = formData.get("ownerPhone") as string;
+
     // ─── Thumbnail ─────────────────────────────────────────────
     const thumbnailFile = formData.get("thumbnail") as File | null;
     let imageUrl = "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80";
@@ -40,9 +43,9 @@ export async function POST(req: NextRequest) {
       imageUrl = await saveUploadedFile(thumbnailFile, "thumbnails");
     }
 
-    // ─── Gallery (max 10) ──────────────────────────────────────
+    // ─── Gallery (max 5) ───────────────────────────────────────
     const galleryFiles = formData.getAll("gallery") as File[];
-    const validGallery = galleryFiles.filter(f => f && f.size > 0).slice(0, 10);
+    const validGallery = galleryFiles.filter(f => f && f.size > 0).slice(0, 5);
     const galleryPaths: string[] = [];
     for (const file of validGallery) {
       galleryPaths.push(await saveUploadedFile(file, "gallery"));
@@ -68,6 +71,7 @@ export async function POST(req: NextRequest) {
     const city         = formData.get("city") as string;
     const youtubeUrl   = formData.get("youtubeUrl") as string;
 
+    // Create property in PENDING state (isApproved: false)
     await prisma.property.create({
       data: {
         title, description, price, location,
@@ -77,18 +81,21 @@ export async function POST(req: NextRequest) {
         transaction, furnishing, propertyAge,
         flatUnitNo, buildingName, street, landmark,
         pinCode, address, city, youtubeUrl,
-        isApproved: true,
+        
+        // Public Submission Fields
+        ownerName, ownerEmail, ownerPhone,
+        isApproved: false,
       },
     });
 
-    revalidatePath("/admin");
-    revalidatePath("/");
+    // NOTE: Intentionally not revalidating paths so it doesn't try to show up immediately
+    // Wait until admin approves it
 
     return NextResponse.json({ success: true });
   } catch (err: any) {
-    console.error("Error creating property:", err);
+    console.error("Error submitting property:", err);
     return NextResponse.json(
-      { error: "Failed to create property", detail: err?.message || String(err) },
+      { error: "Failed to submit property", detail: err?.message || String(err) },
       { status: 500 }
     );
   }

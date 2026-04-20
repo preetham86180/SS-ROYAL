@@ -38,7 +38,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
   });
 
   const featuredProperties = await prisma.property.findMany({
-    where: { isFeatured: true },
+    where: { isFeatured: true, isApproved: true },
     orderBy: { createdAt: "desc" },
   });
 

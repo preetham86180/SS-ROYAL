@@ -3,7 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
-import { ChatBot } from "@/components/ChatBot";
+import { ChatBotWrapper } from "@/components/ChatBotWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,7 +59,7 @@ export default function RootLayout({
         <ServiceWorkerRegistrar />
         <SplashScreen />
         {children}
-        <ChatBot />
+        <ChatBotWrapper />
       </body>
     </html>
   );

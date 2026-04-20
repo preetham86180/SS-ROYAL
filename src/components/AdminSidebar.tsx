@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut } from "lucide-react";
+import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut, Inbox } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
@@ -31,6 +31,13 @@ export function AdminSidebar() {
         >
           <PlusCircle size={20} className={pathname === '/admin/new' ? 'text-brand-600' : 'text-gray-500'} />
           <span className="font-medium">New Listing</span>
+        </Link>
+        <Link
+          href="/admin/pending"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${pathname === '/admin/pending' ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-100'}`}
+        >
+          <Inbox size={20} className={pathname === '/admin/pending' ? 'text-brand-600' : 'text-gray-500'} />
+          <span className="font-medium">Pending Submissions</span>
         </Link>
       </nav>
       <div className="p-4 border-t border-gray-100 space-y-1">
