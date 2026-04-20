@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
+import { ChatBot } from "@/components/ChatBot";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -52,11 +53,13 @@ export default function RootLayout({
     <html
       lang="en"
       className={`${inter.variable} ${space.variable} h-full antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans">
+      <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
         <ServiceWorkerRegistrar />
         <SplashScreen />
         {children}
+        <ChatBot />
       </body>
     </html>
   );
