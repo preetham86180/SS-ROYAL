@@ -110,7 +110,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
               <div className="relative group">
                  <div className="w-[300px] h-[300px] rounded-full overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] relative z-10 border border-white/10 group-hover:border-white/30 transition-colors">
                     <img 
-                      src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400" 
+                      src="/agent.jpg" 
                       alt="Real Estate Agent" 
                       className="w-full h-full object-cover"
                     />
