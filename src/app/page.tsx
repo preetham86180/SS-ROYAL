@@ -112,7 +112,7 @@ export default async function Home(props: { searchParams: SearchParams }) {
                     <img 
                       src="/agent.jpg" 
                       alt="Real Estate Agent" 
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-cover object-top"
                     />
                  </div>
                  <div className="absolute top-4 right-4 w-16 h-16 bg-white rounded-full flex items-center justify-center text-[#0B1120] shadow-2xl z-20">
