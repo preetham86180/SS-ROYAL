@@ -4,6 +4,7 @@ import { PropertyCard } from "@/components/PropertyCard";
 import { SearchWidget } from "@/components/SearchWidget";
 import { CitySelector } from "@/components/CitySelector";
 import { FeaturedSection } from "@/components/FeaturedSection";
+import { EMICalculator } from "@/components/EMICalculator";
 
 import { prisma } from "@/lib/prisma";
 
@@ -171,6 +172,9 @@ export default async function Home(props: { searchParams: SearchParams }) {
 
         {/* FEATURED PROPERTIES SECTION */}
         <FeaturedSection properties={featuredProperties} />
+
+        {/* EMI CALCULATOR SECTION */}
+        <EMICalculator />
       </main>
       <Footer />
     </>
