@@ -6,12 +6,11 @@ import { ReactNode } from "react";
 export default function Template({ children }: { children: ReactNode }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 15 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: 15 }}
       transition={{ 
-        duration: 0.5, 
-        ease: [0.22, 1, 0.36, 1],
+        duration: 0.2, 
+        ease: "easeOut",
       }}
       className="flex-1 flex flex-col"
     >

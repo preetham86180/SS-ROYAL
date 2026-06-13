@@ -1,12 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useSpring } from "framer-motion";
 
 export function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
+  const springConfig = { damping: 25, stiffness: 250 };
+  const cursorXSpring = useSpring(cursorX, springConfig);
+  const cursorYSpring = useSpring(cursorY, springConfig);
+
   const [isHovering, setIsHovering] = useState(false);
-  const [isDesktop, setIsDesktop] = useState(true); // default true for SSR, we'll check properly below
+  const [isDesktop, setIsDesktop] = useState(true); // default true for SSR
 
   useEffect(() => {
     // Only run on desktop devices (don't show custom cursor on touch devices)
@@ -15,7 +21,8 @@ export function CustomCursor() {
       setIsDesktop(checkDesktop());
       
       const updateMousePosition = (e: MouseEvent) => {
-        setMousePosition({ x: e.clientX, y: e.clientY });
+        cursorX.set(e.clientX);
+        cursorY.set(e.clientY);
       };
 
       const updateHoverState = (e: MouseEvent) => {
@@ -52,9 +59,13 @@ export function CustomCursor() {
       {/* Small dot that follows exactly */}
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 bg-brand-500 rounded-full pointer-events-none z-[9999] mix-blend-difference"
+        style={{
+          x: cursorX,
+          y: cursorY,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
         animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
           scale: isHovering ? 0 : 1,
         }}
         transition={{ type: "tween", ease: "backOut", duration: 0.1 }}
@@ -62,14 +73,18 @@ export function CustomCursor() {
       {/* Larger circle that trails and expands on hover */}
       <motion.div
         className="fixed top-0 left-0 rounded-full pointer-events-none z-[9998] border-2 border-brand-400 mix-blend-difference"
+        style={{
+          x: cursorXSpring,
+          y: cursorYSpring,
+          translateX: "-50%",
+          translateY: "-50%",
+        }}
         animate={{
-          x: mousePosition.x - (isHovering ? 24 : 16),
-          y: mousePosition.y - (isHovering ? 24 : 16),
           width: isHovering ? 48 : 32,
           height: isHovering ? 48 : 32,
           backgroundColor: isHovering ? "rgba(14, 165, 233, 0.2)" : "rgba(14, 165, 233, 0)",
         }}
-        transition={{ type: "spring", stiffness: 150, damping: 15, mass: 0.5 }}
+        transition={{ duration: 0.2 }}
       />
     </>
   );
