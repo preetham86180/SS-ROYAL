@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut, Inbox } from "lucide-react";
+import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut, Inbox, Users } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
@@ -24,6 +24,13 @@ export function AdminSidebar() {
         >
           <LayoutDashboard size={20} className={pathname === '/admin' ? 'text-brand-600' : 'text-gray-500'} />
           <span className="font-medium">Dashboard</span>
+        </Link>
+        <Link
+          href="/admin/clients"
+          className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${pathname === '/admin/clients' ? 'bg-brand-50 text-brand-700' : 'text-gray-700 hover:bg-gray-100'}`}
+        >
+          <Users size={20} className={pathname === '/admin/clients' ? 'text-brand-600' : 'text-gray-500'} />
+          <span className="font-medium">Clients & Payments</span>
         </Link>
         <Link
           href="/admin/new"

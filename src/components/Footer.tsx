@@ -48,7 +48,8 @@ export function Footer() {
               <li><Link href="#" className="hover:text-white transition-colors">Travel Expense Form</Link></li>
               <li><Link href="#" className="hover:text-white transition-colors">PMS Form</Link></li>
               <li><Link href="#" className="hover:text-white transition-colors">Tenant Form</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Terms and Conditions</Link></li>
+              <li><Link href="/terms" className="hover:text-white transition-colors">Terms and Conditions</Link></li>
+              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
               <li><Link href="#" className="hover:text-white transition-colors">Property for sale</Link></li>
               <li><Link href="#" className="hover:text-white transition-colors">Property for rent</Link></li>
               <li><Link href="#" className="hover:text-white transition-colors">Residential Project</Link></li>

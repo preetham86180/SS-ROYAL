@@ -140,6 +140,7 @@ export default async function AdminDashboard() {
             {/* Title + Featured */}
             <div className="flex items-start justify-between gap-2">
               <p className="font-semibold text-gray-900 leading-snug line-clamp-2 flex-1">
+                <span className="font-mono text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded mr-2">{property.propertyNumber}</span>
                 {property.title}
               </p>
               <form
@@ -226,6 +227,7 @@ export default async function AdminDashboard() {
               >
                 <td className="px-6 py-4">
                   <div className="font-medium text-gray-900 line-clamp-1">
+                    <span className="font-mono text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded mr-2">{property.propertyNumber}</span>
                     {property.title}
                   </div>
                 </td>

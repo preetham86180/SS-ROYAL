@@ -46,4 +46,39 @@ model Property {
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  
+  propertyNumber   String?  @unique
+  assignedClientId String?
+  assignedClient   User?    @relation(fields: [assignedClientId], references: [id])
+  
+  payments    Payment[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      String   @default("USER") // USER or ADMIN
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  assignedProperties Property[]
+  payments  Payment[]
+}
+
+model Payment {
+  id            String   @id @default(cuid())
+  userId        String
+  propertyId    String
+  amount        Float
+  status        String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  razorpayOrderId String?
+  razorpayPaymentId String?
+  
+  user          User     @relation(fields: [userId], references: [id])
+  property      Property @relation(fields: [propertyId], references: [id])
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

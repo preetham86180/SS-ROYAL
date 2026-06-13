@@ -4,6 +4,8 @@ import "./globals.css";
 import { SplashScreen } from "@/components/SplashScreen";
 import { ServiceWorkerRegistrar } from "@/components/ServiceWorkerRegistrar";
 import { ChatBotWrapper } from "@/components/ChatBotWrapper";
+import { AuthProvider } from "@/components/AuthProvider";
+import { CustomCursor } from "@/components/CustomCursor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -56,10 +58,13 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
-        <ServiceWorkerRegistrar />
-        <SplashScreen />
-        {children}
-        <ChatBotWrapper />
+        <AuthProvider>
+          <CustomCursor />
+          <ServiceWorkerRegistrar />
+          <SplashScreen />
+          {children}
+          <ChatBotWrapper />
+        </AuthProvider>
       </body>
     </html>
   );

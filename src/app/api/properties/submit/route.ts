@@ -71,6 +71,16 @@ export async function POST(req: NextRequest) {
     const city         = formData.get("city") as string;
     const youtubeUrl   = formData.get("youtubeUrl") as string;
 
+    // ─── Generate Unique Property Number ────────────────────────
+    let propertyNumber = "";
+    let isUnique = false;
+    while (!isUnique) {
+      const num = Math.floor(100000 + Math.random() * 900000);
+      propertyNumber = `SS-${num}`;
+      const existing = await prisma.property.findUnique({ where: { propertyNumber } });
+      if (!existing) isUnique = true;
+    }
+
     // Create property in PENDING state (isApproved: false)
     await prisma.property.create({
       data: {
@@ -84,6 +94,7 @@ export async function POST(req: NextRequest) {
         
         // Public Submission Fields
         ownerName, ownerEmail, ownerPhone,
+        propertyNumber,
         isApproved: false,
       },
     });

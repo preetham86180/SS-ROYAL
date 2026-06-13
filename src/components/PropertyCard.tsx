@@ -39,9 +39,12 @@ export function PropertyCard({
 
   return (
     <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.2, ease: "easeOut" }}
-      className="group relative bg-white border border-gray-100 flex flex-col shadow-sm hover:shadow-lg transition-shadow duration-300"
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-50px" }}
+      whileHover={{ y: -8, scale: 1.02 }}
+      transition={{ duration: 0.4, ease: "easeOut" }}
+      className="group relative bg-white border border-gray-100 flex flex-col shadow-[0_0_15px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_40px_rgba(0,0,0,0.12)] hoverable transition-shadow duration-300 rounded-xl overflow-hidden"
     >
       <Link href={`/properties/${id}`} className="block absolute inset-0 z-10">
         <span className="sr-only">View {title}</span>

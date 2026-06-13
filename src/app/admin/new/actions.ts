@@ -73,6 +73,16 @@ export async function createProperty(formData: FormData) {
   // ─── Description fields ───────────────────────────────────────
   const youtubeUrl = formData.get("youtubeUrl") as string;
 
+  // ─── Generate Unique Property Number ────────────────────────
+  let propertyNumber = "";
+  let isUnique = false;
+  while (!isUnique) {
+    const num = Math.floor(100000 + Math.random() * 900000);
+    propertyNumber = `SS-${num}`;
+    const existing = await prisma.property.findUnique({ where: { propertyNumber } });
+    if (!existing) isUnique = true;
+  }
+
   await prisma.property.create({
     data: {
       title, description, price, location, bedrooms, bathrooms,
@@ -81,6 +91,7 @@ export async function createProperty(formData: FormData) {
       transaction, furnishing, propertyAge,
       flatUnitNo, buildingName, street, landmark, pinCode, address, city,
       youtubeUrl,
+      propertyNumber,
     },
   });
 

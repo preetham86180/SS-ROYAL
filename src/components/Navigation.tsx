@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Search, User, Grid, Menu, X } from "lucide-react";
+import { Building2, Search, User, Grid, Menu, X, CreditCard } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -71,9 +71,16 @@ export function Navigation() {
           ))}
         </nav>
         
-        {/* Desktop Admin Button */}
+        {/* Desktop Admin & Pay Buttons */}
         <div className="hidden lg:flex items-center gap-3">
-          <Link href="/admin" className="w-10 h-10 flex items-center justify-center text-white hover:text-gray-300 transition-colors">
+          <Link href="/pay" className="flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg font-medium transition-colors text-sm">
+            <CreditCard size={18} />
+            Pay Now
+          </Link>
+          <Link href="/account" className="w-10 h-10 flex items-center justify-center text-white hover:text-gray-300 transition-colors" title="Account">
+            <User size={24} />
+          </Link>
+          <Link href="/admin" className="w-10 h-10 flex items-center justify-center text-white hover:text-gray-300 transition-colors" title="Admin Dashboard">
              <Grid size={24} />
           </Link>
         </div>
@@ -112,6 +119,20 @@ export function Navigation() {
                 </Link>
               ))}
               <div className="w-full h-px bg-white/10 my-2" />
+              <Link
+                href="/pay"
+                className="flex items-center gap-3 text-lg font-medium text-brand-400 hover:text-brand-300 transition-colors"
+              >
+                <CreditCard size={20} />
+                Pay Now
+              </Link>
+              <Link
+                href="/account"
+                className="flex items-center gap-3 text-lg font-medium text-gray-400 hover:text-white transition-colors"
+              >
+                <User size={20} />
+                My Account
+              </Link>
               <Link
                 href="/admin"
                 className="flex items-center gap-3 text-lg font-medium text-gray-400 hover:text-white transition-colors"
