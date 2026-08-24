@@ -20,7 +20,7 @@ export function Footer() {
                 </li>
                 <li className="flex items-center gap-4 text-[13px] text-gray-400">
                   <Mail className="w-4 h-4 flex-shrink-0" />
-                  <span>Email: contact@ssroyal.com</span>
+                  <span>Email: admin@ssroyalproperties.in</span>
                 </li>
                 <li className="flex items-center gap-4 text-[13px] text-gray-400">
                   <Phone className="w-4 h-4 flex-shrink-0" />

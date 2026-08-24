@@ -32,7 +32,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex items-center gap-6">
                   <Mail className="w-6 h-6 text-white" />
-                  <span className="text-[15px]">demo@gmail.com</span>
+                  <span className="text-[15px]">admin@ssroyalproperties.in</span>
                 </div>
                 <div className="flex items-start gap-6">
                   <MapPin className="w-6 h-6 text-white mt-1 shrink-0" />

@@ -3,7 +3,7 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Building2 } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import Link from "next/link";
 
 export default function LoginPage() {
@@ -28,7 +28,13 @@ export default function LoginPage() {
       setError("Invalid email or password");
       setLoading(false);
     } else {
-      router.push("/account"); // Or /admin depending on role, but account works for all users
+      const { getSession } = await import("next-auth/react");
+      const session = await getSession();
+      if ((session?.user as any)?.role === "ADMIN" || email === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/account");
+      }
     }
   };
 
@@ -36,8 +42,8 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-8">
         <div className="flex justify-center mb-6">
-          <div className="bg-brand-500 text-white p-3 rounded-xl shadow-md">
-            <Building2 size={32} />
+          <div className="p-2 rounded-xl">
+            <Logo size={64} />
           </div>
         </div>
         <h1 className="text-2xl font-bold font-display text-center text-gray-900 mb-2">

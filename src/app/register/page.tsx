@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Building2 } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
 
@@ -55,8 +55,8 @@ export default function RegisterPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 p-8">
         <div className="flex justify-center mb-6">
-          <div className="bg-brand-500 text-white p-3 rounded-xl shadow-md">
-            <Building2 size={32} />
+          <div className="p-2 rounded-xl">
+            <Logo size={64} />
           </div>
         </div>
         <h1 className="text-2xl font-bold font-display text-center text-gray-900 mb-2">

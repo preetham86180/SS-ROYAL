@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Building2 } from "lucide-react";
+import { Logo } from "@/components/Logo";
 
 export function SplashScreen() {
   const [isVisible, setIsVisible] = useState(true);
@@ -46,7 +46,7 @@ export function SplashScreen() {
               }}
               className="bg-white text-gray-900 p-5 rounded-2xl shadow-[0_0_50px_rgba(255,255,255,0.2)]"
             >
-              <Building2 size={64} strokeWidth={1.5} />
+              <Logo size={96} />
             </motion.div>
 
             {/* Text Animation */}

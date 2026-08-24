@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut, Inbox, Users } from "lucide-react";
+import { LayoutDashboard, PlusCircle, Globe, Menu, X, LogOut, Inbox, Users } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { signOut } from "next-auth/react";
@@ -71,7 +72,7 @@ export function AdminSidebar() {
       {/* Mobile Header (Hamburger) */}
       <div className="md:hidden flex items-center justify-between bg-white border-b border-gray-200 px-4 h-16 shrink-0 z-30">
         <Link href="/admin" className="flex items-center gap-2 text-brand-600">
-          <Building2 size={24} />
+          <Logo size={32} />
           <div className="flex flex-col">
             <span className="font-display font-bold text-lg text-gray-900 leading-none">
               SS ROYAL
@@ -103,7 +104,7 @@ export function AdminSidebar() {
             >
               <div className="h-16 flex items-center justify-between px-6 border-b border-gray-100 shrink-0">
                 <Link href="/admin" className="flex items-center gap-2 text-brand-600">
-                  <Building2 size={24} />
+                  <Logo size={32} />
                   <span className="font-display font-bold text-lg text-gray-900 leading-none">Admin</span>
                 </Link>
                 <button onClick={() => setIsOpen(false)} className="p-2 text-gray-400 hover:bg-gray-100 rounded-full transition-colors">
@@ -120,7 +121,7 @@ export function AdminSidebar() {
       <aside className="hidden md:flex w-64 bg-white border-r border-gray-200 flex-col shrink-0 overflow-y-auto">
         <div className="h-16 flex items-center px-6 border-b border-gray-100 shrink-0">
           <Link href="/admin" className="flex items-center gap-2 text-brand-600">
-            <Building2 size={24} />
+            <Logo size={32} />
             <div className="flex flex-col">
               <span className="font-display font-bold text-lg text-gray-900 leading-none">
                 SS ROYAL Admin

@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Building2, Search, User, Grid, Menu, X, CreditCard } from "lucide-react";
+import { Search, User, Grid, Menu, X, CreditCard } from "lucide-react";
+import { Logo } from "@/components/Logo";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 
@@ -39,8 +40,8 @@ export function Navigation() {
     <header className={`fixed top-0 z-50 w-full transition-colors duration-300 ${isDarkHeader ? 'bg-[#0B1120]/95 backdrop-blur-md shadow-lg' : 'bg-transparent border-b border-white/10'}`}>
       <div className="container mx-auto px-4 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2 group z-50">
-          <div className="bg-white text-gray-900 p-2 rounded-lg group-hover:bg-gray-100 transition-colors">
-            <Building2 size={28} />
+          <div className="bg-white/5 p-1 rounded-lg group-hover:bg-white/10 transition-colors">
+            <Logo size={36} />
           </div>
           <div className="flex flex-col ml-1">
             <span className="font-display font-bold text-xl md:text-2xl tracking-tight text-white leading-none mb-0.5">
